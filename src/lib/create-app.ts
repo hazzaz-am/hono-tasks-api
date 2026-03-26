@@ -3,10 +3,14 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
 import { logger } from "@/middlewares/pino-logger.js";
 
-export function createApp() {
-  const app = new OpenAPIHono<AppBindings>({
+export function createRouter() {
+  return new OpenAPIHono<AppBindings>({
     strict: false
   });
+}
+
+export function createApp() {
+  const app = createRouter();
   app.use(serveEmojiFavicon("🖥️"));
   app.use(logger());
 
